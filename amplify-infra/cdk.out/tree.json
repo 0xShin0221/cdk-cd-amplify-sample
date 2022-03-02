@@ -1,0 +1,232 @@
+{
+  "version": "tree-0.1",
+  "tree": {
+    "id": "App",
+    "path": "",
+    "children": {
+      "Tree": {
+        "id": "Tree",
+        "path": "Tree",
+        "constructInfo": {
+          "fqn": "constructs.Construct",
+          "version": "10.0.76"
+        }
+      },
+      "AmplifyInfraStack": {
+        "id": "AmplifyInfraStack",
+        "path": "AmplifyInfraStack",
+        "children": {
+          "AmplifyReactTestRepo": {
+            "id": "AmplifyReactTestRepo",
+            "path": "AmplifyInfraStack/AmplifyReactTestRepo",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "AmplifyInfraStack/AmplifyReactTestRepo/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::CodeCommit::Repository",
+                  "aws:cdk:cloudformation:props": {
+                    "repositoryName": "amplify-react-test-repo",
+                    "repositoryDescription": "CodeCommit repository that will be used as the source repository for the sample react app and the cdk app"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_codecommit.CfnRepository",
+                  "version": "2.15.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_codecommit.Repository",
+              "version": "2.15.0"
+            }
+          },
+          "sample-react-app ": {
+            "id": "sample-react-app ",
+            "path": "AmplifyInfraStack/sample-react-app ",
+            "children": {
+              "Role": {
+                "id": "Role",
+                "path": "AmplifyInfraStack/sample-react-app /Role",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "AmplifyInfraStack/sample-react-app /Role/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                      "aws:cdk:cloudformation:props": {
+                        "assumeRolePolicyDocument": {
+                          "Statement": [
+                            {
+                              "Action": "sts:AssumeRole",
+                              "Effect": "Allow",
+                              "Principal": {
+                                "Service": "amplify.amazonaws.com"
+                              }
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                      "version": "2.15.0"
+                    }
+                  },
+                  "DefaultPolicy": {
+                    "id": "DefaultPolicy",
+                    "path": "AmplifyInfraStack/sample-react-app /Role/DefaultPolicy",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "AmplifyInfraStack/sample-react-app /Role/DefaultPolicy/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                          "aws:cdk:cloudformation:props": {
+                            "policyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": "codecommit:GitPull",
+                                  "Effect": "Allow",
+                                  "Resource": {
+                                    "Fn::GetAtt": [
+                                      "AmplifyReactTestRepoC7602942",
+                                      "Arn"
+                                    ]
+                                  }
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            },
+                            "policyName": "samplereactappRoleDefaultPolicy9C404720",
+                            "roles": [
+                              {
+                                "Ref": "samplereactappRole87141D8E"
+                              }
+                            ]
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                          "version": "2.15.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.Policy",
+                      "version": "2.15.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.Role",
+                  "version": "2.15.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "AmplifyInfraStack/sample-react-app /Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Amplify::App",
+                  "aws:cdk:cloudformation:props": {
+                    "name": "sample-react-app ",
+                    "basicAuthConfig": {
+                      "enableBasicAuth": false
+                    },
+                    "iamServiceRole": {
+                      "Fn::GetAtt": [
+                        "samplereactappRole87141D8E",
+                        "Arn"
+                      ]
+                    },
+                    "repository": {
+                      "Fn::GetAtt": [
+                        "AmplifyReactTestRepoC7602942",
+                        "CloneUrlHttp"
+                      ]
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_amplify.CfnApp",
+                  "version": "2.15.0"
+                }
+              },
+              "master": {
+                "id": "master",
+                "path": "AmplifyInfraStack/sample-react-app /master",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "AmplifyInfraStack/sample-react-app /master/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::Amplify::Branch",
+                      "aws:cdk:cloudformation:props": {
+                        "appId": {
+                          "Fn::GetAtt": [
+                            "samplereactappF1E2136F",
+                            "AppId"
+                          ]
+                        },
+                        "branchName": "master",
+                        "enableAutoBuild": true,
+                        "enablePullRequestPreview": true
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_amplify.CfnBranch",
+                      "version": "2.15.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "@aws-cdk/aws-amplify-alpha.Branch",
+                  "version": "2.15.0-alpha.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "@aws-cdk/aws-amplify-alpha.App",
+              "version": "2.15.0-alpha.0"
+            }
+          },
+          "CDKMetadata": {
+            "id": "CDKMetadata",
+            "path": "AmplifyInfraStack/CDKMetadata",
+            "children": {
+              "Default": {
+                "id": "Default",
+                "path": "AmplifyInfraStack/CDKMetadata/Default",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnResource",
+                  "version": "2.15.0"
+                }
+              },
+              "Condition": {
+                "id": "Condition",
+                "path": "AmplifyInfraStack/CDKMetadata/Condition",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnCondition",
+                  "version": "2.15.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.0.76"
+            }
+          }
+        },
+        "constructInfo": {
+          "fqn": "aws-cdk-lib.Stack",
+          "version": "2.15.0"
+        }
+      }
+    },
+    "constructInfo": {
+      "fqn": "aws-cdk-lib.App",
+      "version": "2.15.0"
+    }
+  }
+}

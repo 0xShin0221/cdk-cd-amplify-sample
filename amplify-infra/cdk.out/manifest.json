@@ -1,0 +1,100 @@
+{
+  "version": "16.0.0",
+  "artifacts": {
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    },
+    "AmplifyInfraStack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "AmplifyInfraStack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "AmplifyInfraStack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://unknown-account/unknown-region",
+      "properties": {
+        "templateFile": "AmplifyInfraStack.template.json",
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/39fea72937d292dc8564ef40d9e80eef8d723ddb426355c9a836d6200d0d4feb.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "AmplifyInfraStack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-${AWS::Region}",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "AmplifyInfraStack.assets"
+      ],
+      "metadata": {
+        "/AmplifyInfraStack/AmplifyReactTestRepo/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AmplifyReactTestRepoC7602942"
+          }
+        ],
+        "/AmplifyInfraStack/sample-react-app /Role/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "samplereactappRole87141D8E"
+          }
+        ],
+        "/AmplifyInfraStack/sample-react-app /Role/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "samplereactappRoleDefaultPolicy9C404720"
+          }
+        ],
+        "/AmplifyInfraStack/sample-react-app /Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "samplereactappF1E2136F"
+          }
+        ],
+        "/AmplifyInfraStack/sample-react-app /master/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "samplereactappmaster05096FC8"
+          }
+        ],
+        "/AmplifyInfraStack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/AmplifyInfraStack/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/AmplifyInfraStack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/AmplifyInfraStack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "AmplifyInfraStack"
+    }
+  }
+}
